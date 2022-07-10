@@ -1,5 +1,7 @@
 % LaTeX-Vorlage zur Erstellung von Abschlussarbeiten an der FH Aachen
 % Author: Sven Hinz
+\RequirePackage{scrlfile}
+\ReplacePackage{scrpage2}{scrlayer-scrpage}
 
 \documentclass[12pt,a4paper]{scrreprt}
 
@@ -10,6 +12,9 @@
 %\usepackage[applemac]{inputenc}  % Mac
 
 \usepackage[ngerman]{babel}       % Sprache: deutsch
+\usepackage{hyperref}   %links in TOC
+\hypersetup{colorlinks=true, linkcolor=blue}
+\usepackage{comment}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -91,12 +96,12 @@
 % Quellenverzeichnis
 \renewcaptionname{ngerman}{\bibname}{Quellenverzeichnis} % Umbenennung in Quellenverzeichnis
 
-\usepackage[
-  tocindentmanual,
-  tocflat,
-  tocbreaksstrict,
-  toctextentriesleft,
-]{tocstyle}
+%\usepackage[
+%  tocindentmanual,
+%  tocflat,
+%  tocbreaksstrict,
+%  toctextentriesleft,
+%]{tocbasic}
 
 % Abkürzungsverzeichnis
 %\usepackage[intoc]{nomencl}
@@ -116,17 +121,21 @@
 % Einbinden der Textinhalte mit '\include{...}'
 % Die Dateien mit den Textinhalten befinden sich im Ordner 'doc'
 
-\include{./doc/001titelblatt}
+\include{./doc/0titelblatt}
 
-\include{./doc/002erklaerung}
+\include{./doc/0erklaerung}
 
-%\include{./doc/003danksagung}
+%\include{./doc/0danksagung}
 
 % Inhaltsverzeichnis
 \clearpage
 \makeatletter
 \renewcommand*{\@dotsep}{1} % Punktabstand einstellen
 \makeatother
+    {
+        \hypersetup{linkcolor=black}
+        \tableofcontents
+    }
 \tableofcontents
 
 % Das erste Kapitel soll auf einer ungeraden Seite beginnen.
@@ -136,17 +145,14 @@
 % Nicht benötigte Kapitel können auskommentiert werden
 % Für zusätzliche Kapitel müssen weitere Dateien im Ordner 'doc' angelegt werden
 
-\include{./doc/101kap1} % Einleitung
-\include{./doc/102kap2}
-\include{./doc/103kap3}
-\include{./doc/104kap4}
-\include{./doc/105kap5}
-\include{./doc/106kap6}
-\include{./doc/107kap7}
-\include{./doc/108kap8}
-\include{./doc/109kap9}
-\include{./doc/110kap10}
-\include{./doc/111kap11}
+\include{doc/1einleitung} % einleitung
+\include{doc/2vorwissen} % vorwissen
+\include{doc/3lokalisierung_loesunsansaetze} % Lokalisierung - Lösungsansätze
+
+% beispiele von der Vorlage
+%\include{./doc/101kap1} % Einleitung
+%\include{./doc/102kap2}
+
 
 % Nachspann
 \nocite{waermeatlas} % Quelle wird nicht im Text erwähnt -> Quellenverzeichnis
@@ -164,7 +170,7 @@
 % Abkürzungsverzeichnis
 \clearpage
 \markright{Abkürzungsverzeichnis}
-\include{./doc/202abkuerzungsverzeichnis}
+\include{./doc/0abkuerzungsverzeichnis}
 %\addtocontents{toc}{\vspace{0.8cm}}
 
 % Abbildungsverzeichnis
