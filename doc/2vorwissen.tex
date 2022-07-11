@@ -8,29 +8,39 @@ Hier steht eine Einleitung zum Vorwissen-Kapitel.
 
 \section{bestimmbare Positionen}\label{chap:bestimmbare Positionen}
 \addtocontents{toc}{\vspace{0.8cm}}
+Die Position eines sich auf dem Boden bewegenden mobilen Roboters, in Bild 1a  eines sog. Differential Drive Roboters, kann angegeben werden durch 
+$p=\mathbf{\begin{psmallmatrix}
+x & y & \psi
+\end{psmallmatrix}}^\intercal$.
+Hierbei bezieht sich $x$ auf die Position gepeilt auf die x-Achse, $y$ die Position gepeilt auf die y-Achse und $\psi$  den Winkel zwischen der Ausrichtung des Roboters und der x-Achse. Die Literatur bezeichnet die erhaltene Position im Fall eines bodengebundenen Roboters als eine 2D Position.\\
+Zur Positionsbestimmung eines UAVs (unmanned aerial vehicle) kommt im Falle einer 3D Positionsbestimmung eine weitere Achse hinzu, sodass die 3D Position angegeben werde kann durch
+$p=\mathbf{\begin{psmallmatrix}
+x & y & z & \psi
+\end{psmallmatrix}}^\intercal$.
+Die zusätzliche Variable $z$ bezeichnet hierbei die Position des Roboters gepeilt auf die z-Achse. (siehe Bild 1b)\\
+Eine weitere Darstellung der Position eines UAVs ist die 6D Position. Hierbei kommen zu der eben besprochenen 3D Position zwei Winkel hinzu, wodurch die 6D Position angegeben werden kann durch
+$p=\mathbf{\begin{psmallmatrix}
+x & y & z & \psi & \theta & \varphi
+\end{psmallmatrix}}^\intercal$.
+Dies folgt einer Konvention der Luft-und Raumfahrt, dem Schiffbau und dem Automobilbau, wonach die Reihenfolge der Eulerschen Winkel in Gier-, Nick-, und Rollwinkel (engl. \textit{yaw, pitch, roll}) festgelegt ist. (siehe Bild 1c) Der Winkel $\psi$ beschreibt folglich den Gierwinkel, $\theta$ den Nickwinkel und $\varphi$ den Rollwinkel.\\
 
-% TODO bestimmbare Positionen - Vorwissen
-Hier wird bald etwas über die bestimmbaren Positionen stehen.
-% Formel
-Hier eine Formel
-\begin{equation}\label{eq:waermestrom}
-\dot Q = \frac{dQ}{dt} = \lambda \frac{T_1-T_2}{\Delta x} A
-\end{equation}
+% TODO Koordinatensystemsbilder einfügen
+[Bild 1a, 1b, 1c einfügen]\\
+
+
 
 
 \section{Sensorik}\label{chap:Sensorik}
 \addtocontents{toc}{\vspace{0.8cm}}
-
-
 % TODO Sensorik
 Hier wird bald etwas über vorhanden Sensorik zur Lösung des Lokalisationsproblems stehen.
-\newpage
 
-\section{Kartendarstellungen}\label{chap:Kartendarstellungen}
+\section{Kartenrepräsentation}\label{chap:Kartenrepräsentation}
 \addtocontents{toc}{\vspace{0.8cm}}
+% TODO Kartenrepräsentation
+Zur Positionsbestimmung in einer Karte ist die Auswahl der Kartenrepräsentation maßgebend. In der Kartendarstellung wird unterschieden zwischen einem topologischen- und einem metrischen Gerüst für eine Karte.\\
+Bei einem topologischen Rahmen werden nur die Orte und dessen Beziehungen berücksichtigt, sodass die Karte ein Graph ist, bestehend aus Knoten, die die Orte repräsentieren und Bögen, die die Verbindungen der Orte darstellen. In einem metrischen Gerüst für eine Karte wird die räumlich-, Koordinatensystem-basierte Darstellung der Karte verwendet. Die Objekte innerhalb der Karte haben hierbei genaue Koordinaten.\\
+Die in dieser Arbeit zumeist verwendeten Karten nutzen sogenannte \textit{Occupancy Grid Maps}. Hierbei wird ein Gitter mit definierter Masche auf die Karte gelegt. Befindet sich ein Objekt in der Karte, so wird jedes Gitterkästchen in dem sich das Objekt befindet als besetzt (engl. \textit{occupied}) gewertet und wie in Bild 2 schwarz eingefärbt. So können die für eine Karte benötigten Datenmengen kontrolliert und eingegrenzt werden.\\
 
-% TODO Kartendarstellungen
-Hier wird bald etwas über ein paar der verschiedenen Kartendarstellungen in der Robotik stehen.\\ 
-Zwei Backspaces im Skript ergeben einen Absatz auf der PDF.\\
-
-Zwei Backsapces und eine Leerzeile im Skript ergeben einen Absatz mit Leerzeile in der PDF.
+% TODO Occupancy Grid Map Bilder hinzufügen
+[Bild 2 einfügen]
