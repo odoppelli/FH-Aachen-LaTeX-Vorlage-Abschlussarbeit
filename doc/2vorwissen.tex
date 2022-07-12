@@ -4,7 +4,7 @@
 Im Folgenden werden ein paar grundsätzliche Sachverhalte und Definitionen festgelegt und erläutert. Sie sollen das Verständnis der Algorithmen in Kapitel \ref{chap:Lokalisierung - Lösungsansätze} ermöglichen und fördern. 
 
 
-\section{bestimmbare Positionen}\label{chap:bestimmbare Positionen}
+\section{bestimmbare Positionen}\label{sec:bestimmbare Positionen}
 \addtocontents{toc}{\vspace{0.8cm}}
 Die Position eines sich auf dem Boden bewegenden mobilen Roboters, in Bild 1a  eines sog. Differential Drive Roboters, kann angegeben werden durch 
 $p=\mathbf{\begin{psmallmatrix}
@@ -28,14 +28,24 @@ Dies folgt einer Konvention der Luft-und Raumfahrt, dem Schiffbau und dem Automo
 
 
 
-\section{Sensorik}\label{chap:Sensorik}
+\section{Sensorik}\label{sec:Sensorik}
 \addtocontents{toc}{\vspace{0.8cm}}
-% TODO Sensorik
+Die Sensorik eines mobilen Roboters kann unterteilt werden in interne- und externe Sensoren. Die internen Sensoren befinden sich innerhalb des Systems, und umfassen meistens Beschleunigungs-, Gyro- und gegebenenfalls Magnetometer Sensoren, welche für gewöhnlich in einer sogenannten \textit{Internal Measurement Unit} (IMU) zusammengefasst werden. Sie können genutzt werden, um ohne Wissen über die Außenwelt Aufschluss über die Position des Roboters über die Zeit zu geben. Dies wird auch als \textit{dead reckoning} bezeichnet, da sich die aktuelle Position nur aus der letzten errechneten Position errechnen lässt, welche bereits fehlerbehaftet sein kann. Da die Messung eines Sensors immer mit Messfehlern behaftet sein kann, wird auf diese Messung eine Art Toleranzbereich mit Wahrscheinlichkeitsverteilung angewendet, die oft einer Gaußschen Normalverteilung entspricht. (siehe Bild 3a) Dadurch wird die Unsicherheit bzw. der Drift beim dead reckoning größer, je länger sich der Roboter ohne Berichtigung durch äußere Messungen fortbewegt. (siehen Bild 3b)\\
+Zu eben dieser Berichtigung durch äußere Messungen werden die externen Sensoren eingesetzt. Sie erfassen die den Roboter umgebende Welt durch beispielsweise Kameras, Ultraschallsensoren oder Laser-Range-Scanner. Auch die durch diese Sensoren gesendeten Messung können Messfehler enthalten, weswegen die Messungen wie die der internen Sensoren mit einem Toleranzbereich, dargestellt durch eine Wahrscheinlichkeitsverteilung, verrechnet werden.\\
+
+[Bilder 3a, 3b einfügen]
+
+\section{\textit{Motion-Model}}\label{sec:Motion-Model}
+% TODO Motion-Model schreiben
+hier wird bald was über das motion-model stehen
+
+\section{\textit{Observation-Model}}\label{sec:Observation-Model}
+% TODO Observation-Model
+hier wird bald was über das observation-model stehen.
 
 
 
-
-\section{Kartenrepräsentation}\label{chap:Kartenrepräsentation}
+\section{Kartenrepräsentation}\label{sec:Kartenrepräsentation}
 \addtocontents{toc}{\vspace{0.8cm}}
 Zur Positionsbestimmung in einer Karte ist die Auswahl der Kartenrepräsentation maßgebend. In der Kartendarstellung wird unterschieden zwischen einem topologischen- und einem metrischen Gerüst für eine Karte.\\
 Bei einem topologischen Rahmen werden nur die Orte und dessen Beziehungen berücksichtigt, sodass die Karte ein Graph ist, bestehend aus Knoten, die die Orte repräsentieren und Bögen, die die Verbindungen der Orte darstellen. In einem metrischen Gerüst für eine Karte wird die räumlich-, Koordinatensystem-basierte Darstellung der Karte verwendet. Die Objekte innerhalb der Karte haben hierbei genaue Koordinaten.\\
