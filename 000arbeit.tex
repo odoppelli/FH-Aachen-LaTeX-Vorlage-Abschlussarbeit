@@ -25,7 +25,7 @@
 \usepackage{mathtools}
 \usepackage[left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 
-\author{Sven Hinz} % --> Eigenen Namen einfügen
+\author{Oliver Kuipers} % --> Eigenen Namen einfügen
 
 \usepackage[plainheadsepline,headsepline]{scrpage2}
 \usepackage{color}
@@ -116,97 +116,58 @@
 \usepackage[]{acronym}
 
 \begin{document}
-\setstretch{1.25}
-\addtocontents{toc}{\linespread{1}}
-
-% Einbinden der Textinhalte mit '\include{...}'
-% Die Dateien mit den Textinhalten befinden sich im Ordner 'doc'
-
-\include{./doc/0titelblatt}
-
-\include{./doc/0erklaerung}
-
-%\include{./doc/0danksagung}
-
-% Inhaltsverzeichnis
-\clearpage
-\makeatletter
-\renewcommand*{\@dotsep}{1} % Punktabstand einstellen
-\makeatother
-    {
-        \hypersetup{linkcolor=black}
-        \tableofcontents
-    }
-\tableofcontents
-
-% Das erste Kapitel soll auf einer ungeraden Seite beginnen.
-\cleardoublepage
-\setstretch{1.25}
-
-% Nicht benötigte Kapitel können auskommentiert werden
-% Für zusätzliche Kapitel müssen weitere Dateien im Ordner 'doc' angelegt werden
-
-\include{doc/1einleitung} % einleitung
-\include{doc/2vorwissen} % vorwissen
-\include{doc/3lokalisierung_loesunsansaetze} % Lokalisierung - Lösungsansätze
-
-% beispiele von der Vorlage
-%\include{./doc/101kap1} % Einleitung
-%\include{./doc/102kap2}
-
-
-% Nachspann
-%\nocite{waermeatlas} % Quelle wird nicht im Text erwähnt -> Quellenverzeichnis
-%\nocite{dubbel2005}
-% Weitere quellen müssen in 'bib/quellen.bib' eingetragen werden
-% !!! -> BibTex ausführen! Sonst tauchen die Quellen nicht im Verzeichnis auf.
-
-% Quellenverzeichnis
-\clearpage
-\bibliographystyle{unsrtdin}
-\bibliography{./bib/quellen}
-\addcontentsline{toc}{chapter}{Quellenverzeichnis}
-%\addtocontents{toc}{\vspace{0.8cm}}
-
-% Abkürzungsverzeichnis
-\clearpage
-\markright{Abkürzungsverzeichnis}
-\include{./doc/0abkuerzungsverzeichnis}
-%\addtocontents{toc}{\vspace{0.8cm}}
-
-% Abbildungsverzeichnis
-\clearpage
-\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
-\listoffigures
-%\addtocontents{toc}{\vspace{0.8cm}}
-
-% Tabellenverzeichnis
-\clearpage
-\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
-\listoftables
-\addtocontents{toc}{\vspace{0.8cm}}
-
-% Anhaenge
-\addcontentsline{toc}{chapter}{Anhang}
-\appendix
-%\input{./app/Dateiname}
-\chapter{Datenblätter}
-\begin{enumerate}
-      \item Datenblatt 1
-      \item Datenblatt 2
-\end{enumerate}
-
-% Anhänge im Ordner 'app' ablegen
-
-%\includepdf[pages=1-4]{./app/Datenblatt1.pdf} % Datei mit 4 Seiten
-%\includepdf[pages=1]{./app/Datenblatt2.pdf} % Datei mit einer Seite
-
-\chapter{Konstruktionszeichnungen}
-\begin{enumerate}
-      \item Seitenansicht
-      \item Draufsicht
-\end{enumerate}
-%\includepdf[pages=1]{./app/Seitenansicht.pdf}
-%\includepdf[pages=1]{./app/Draufsicht.pdf}
-
+    \setstretch{1.25}
+    \addtocontents{toc}{\linespread{1}}
+    
+    % Einbinden der Textinhalte mit '\include{...}'
+    % Die Dateien mit den Textinhalten befinden sich im Ordner 'doc'
+    
+    \include{./doc/0titelblatt}
+    \pagenumbering{gobble} %no page numbering
+    \include{./doc/0erklaerung}
+    %\include{./doc/0danksagung}
+    
+    % Inhaltsverzeichnis
+    \clearpage
+    \makeatletter
+    \renewcommand*{\@dotsep}{1} % Punktabstand einstellen
+    \makeatother
+        {
+            \hypersetup{linkcolor=black}
+            \tableofcontents
+        }
+    
+    % Das erste Kapitel soll auf einer ungeraden Seite beginnen.
+    \cleardoublepage
+    \pagenumbering{arabic} % page numbering
+    \setcounter{page}{1} %counter for page numbering is set to 1
+    \setstretch{1.25}
+    
+    % Nicht benötigte Kapitel können auskommentiert werden
+    % Für zusätzliche Kapitel müssen weitere Dateien im Ordner 'doc' angelegt werden
+    
+    \include{doc/1einleitung} % einleitung
+    \include{doc/2vorwissen} % vorwissen
+    \include{doc/3lokalisierung_loesunsansaetze} % Lokalisierung - Lösungsansätze
+    
+    % beispiele von der Vorlage
+    %\include{./doc/101kap1} % Einleitung
+    %\include{./doc/102kap2}
+    
+    
+    % Nachspann
+    %\nocite{waermeatlas} % Quelle wird nicht im Text erwähnt -> Quellenverzeichnis
+    %\nocite{dubbel2005}
+    % Weitere quellen müssen in 'bib/quellen.bib' eingetragen werden
+    % !!! -> BibTex ausführen! Sonst tauchen die Quellen nicht im Verzeichnis auf.
+    
+    % Quellenverzeichnis
+    \clearpage
+    \bibliographystyle{unsrtdin}
+    \bibliography{./bib/quellen}
+    \addcontentsline{toc}{chapter}{Quellenverzeichnis}
+    %\addtocontents{toc}{\vspace{0.8cm}}
+    
+    
+    
 \end{document}
