@@ -5,8 +5,6 @@ Das Themengebiet der Lokalisierung in der mobilen Robotik ist ein Grundstein fü
 
 \section{Monte Carlo Localization}\label{sec:mcl}
 \addtocontents{toc}{\vspace{0.8cm}}
-
-% TODO Kapitel Monte Carlo Lokalisierung schreiben
 Der von Daeller et al. \cite{Monte-Carlo-Localization} entwickelte \textit{Monte Carlo Localization} (MCL) Lokalisierungsalgorithmus verfolgt das Ziel einen mobilen Roboter in bekannter Umgebung zu orten. Der Algorithmus bekommt eine 2D Occupancy Grid Map, das Motion-Model und das Oberservation-Model des Systems zur Verfügung gestellt, generiert damit eine geschätzte 2D Position und ist in der Lage sowohl Position-Tracking, Globale Lokalisierung, als auch Kidnapping-Recovery zu absolvieren. \\
 Es handelt sich hierbei um einen Partikelfilter, bei dem jedes Partikel eine mögliche Position des mobilen Systems ohne Toleranz darstellt. Die Einschätzung der Position $Bel(l)$ wird dargestellt durch ein \textit{N}-zahliges Set von gewichteten, zufälligen Partikeln oder \textit{Samples}.Ein Sample kann dargestellt werden durch $s=\langle\langle x,y,\psi \rangle,p\rangle$, wobei die $\langle x,y,\psi$ die Position, und $p$ das Gewicht beziehungsweise die Wahrscheinlichkeit dieser Position repräsentiert. Das Vorgehen ist eingeteilt in die Schritte \textbf{Robot Motion} und \textbf{Sensor readings}. Folglich wird der Algorithmus beginnend mit dem Schritt \textbf{Sensor readings} erläutert.\\
 Im Beispiel \ref{fig:mcl} wird die eindimensionale Position eines mobiler Roboter berechnet, indem er auf einer Geraden an mehreren Türen entlang fährt. Ein außen montierter Sensor gibt an, ob er sich an einer Tür befindet. Zum Zeitpunkt der Intialisierung des Algorithmus wird das erste Set an Samples mit vollkommen willkürlichen Positionen, und dem Gewicht $p=N^{-1}$ generiert. Dann folgt der Schritt Sensor readings \ref{fig:s_mcl_sensor} wird das Observation-Model genutzt um die Umgebung wahrzunehmen, und von jedem individuellen Sample aus zu berechnen wie wahrscheinlich die erhaltene Messung an der Position \textit{l} des Samples ist. Die Gewichtungen $p$ der einzelnen Samples in dem Sample-Set werden dann entsprechend der Ergebnisse angepasst, sodass $\sum_{n=1}^{N} p_n =1$ gilt. Je wahrscheinlicher die reale Messung am Ort des Samples ist, desto höher ist dessen Gewichtung.\\
@@ -15,13 +13,13 @@ Es folgt der Schritt Robot Motion \ref{fig:s_mcl_motion}: Der Roboter bewegt sic
 \begin{figure}
   \begin{subfigure}[t]{.5\textwidth}
     \centering
-    \includegraphics[width=.8\linewidth]{pic/loesungen/1a_mcl.png}
+    \includegraphics[width=.9\linewidth]{pic/loesungen/1a_mcl.png}
     \caption{Sensor readings}
     \label{fig:s_mcl_sensor}
   \end{subfigure}\hfill
   \begin{subfigure}[t]{.5\textwidth}
     \centering
-    \includegraphics[width=.8\linewidth]{pic/loesungen/1b_mcl.png}
+    \includegraphics[width=.9\linewidth]{pic/loesungen/1b_mcl.png}
     \caption{Robot Motion}
     \label{fig:s_mcl_motion}
   \end{subfigure}
@@ -31,19 +29,48 @@ Es folgt der Schritt Robot Motion \ref{fig:s_mcl_motion}: Der Roboter bewegt sic
 \mbox{}
 
 
-\subsection{Adaptive Monte Carlo Localization}\label{subsec:mcl_surfel}
+\subsection{Adaptive Monte Carlo Localization}\label{subsec:amcl}
 \addtocontents{toc}{\vspace{0.8cm}}
 Der Adaptive Monte Carlo Localization (AMCL) Algorithmus ist eine leichte Abwandlung gegenüber des herkömmlichen MCL Algorithmus, der die Größe des Sample-Sets variiert. In MCL ist die Größe des Sample-Sets nach einmaliger Einstellung unveränderbar, dh. es werden für die Berechnung der Position in jeder Iteration die gleiche Menge an Partikeln benutzt. AMCL verfolgt das Ziel einer zumindest gleichwertigen, wenn nicht sogar besseren Positionsbestimmung wie MCL, will dabei aber ressourcenschonender sein. Das erreicht der Algorithmus, indem er die Anzahl der genutzten Partikel abhängig von der Unsicherheit über die errechnete Position dynamisch anpasst.\\
 Das Position Tracking benötigt für eine genügend genaue Standortbestimmung wesentlich weniger zu berechnende Partikel, als die weitaus größere Herausforderung der globalen Lokalisierung oder der Kidnapping Recovery. Für die dynamische Festlegung der Größe der Sets wird die Abweichung zwischen dem \textit{belief} vor und nach der Messungen der externen Sensoren berechnet. Je größer hierbei die Überraschung der Sensordaten ist, desto größer wird das nächste Sample-Set gewählt. Der AMCL Algorithmus wird auch heutzutage, trotz seines Alters, in vielen Applikationen verwendet, da es schnell eine Position mit geringem Fehler berechnet.
 % TODO Behauptungen hier belegen
 
 
-
 \subsection{Monte Carlo Lokalisierung mit Surfel Grid Maps}\label{subsec:mcl_surfel}
 \addtocontents{toc}{\vspace{0.8cm}}
 % TODO Unterkapitel MCL mit Surfel Grid Maps schreiben
+\begin{wrapfigure}{R}{0.3\textwidth}
+    \centering
+    \includegraphics[width=0.28\textwidth]{pic/loesungen/12_surfel.png}
+    \caption{Surface Element in a Voxel}
+    \label{fig:surfel}
+\end{wrapfigure}
+Kläß et al. \cite{3DsurfelGridMaps} haben 2012 einen Algorithmus vorgestellt, dessen Ziel eine 2D Positionsbestimmung anhand einer 3D Voxel Grid Map ist. Die Lokalisierung wurde in der Veröffentlichung indoor durchgeführt und soll auch in dynamischen Szenarien, wenn sich beispielsweise bewegende Menschen in der Umgebung befinden, genau funktionieren können.\\
+Die Besonderheit dieser Herangehensweise liegt in der Repräsentation der Umgebung. Die Umgebung wird durch eine vielzahl an Voxel (Würfel) modelliert, in denen sich jeweils ein \textit{Surface Element} oder kurz Surfel befindet (siehe bild). Befindet sich bei der Modellierung der Umgebung ein Objekt in einem Voxel, so wird ein Surfel entsprechend der Oberfläche des Objektes im Voxel generiert.\\
+Die dahinter liegenden Berechnungen basieren auf MCL. Der Schritt Robot Motion bleibt bestehen, der der Sensor readings wird allerdings den neuen Techniken abgewandelt. Die Autoren schlagen für die verwendeten Sensor Models je nach Bedarf das \textit{Plane-to-Plane Model} oder das \textit{Line-to-Plane Model} vor. Ersteres stellt ein Oberservation-Model speziell für Sensorik, die 3D Scans in der 3D Surfel Grid Map durchführen soll, wie etwa LiDAR vor. Das Line-to-Plane Model hingegen zeigt eine mögliche Implementierung für Sensorik, die 2D Scans in der 3D Surfel Grid Map leisten soll. Aufgrund der fehlenden Dimension kann in letzterem Modell die Orientierung der Normale des Surfels nicht berücksichtigt werden.\\
+Das System wurde vor allem in Hinblick auf die Navigation von bodengebundenen mobilen Robotern entwickelt. Das neuartige Surface Element soll dazu dienen die problematischen Diskretisierungseffekete von herkömmlichen 3D Voxel Grid Maps zu verringern (siehe Bild). Außerdem soll die Lokalisierung in dynamischen Szenarien erleichtert werden, indem der Algorithmus sich die 3D Map vollständig zu Nutze macht und sich dann auf Messungen über der Höhe des Menschen konzentriert um eine erfolgreiche Ortung durchzuführen.
+% TODO Ergebnisse der Experimente einbringen
+\mbox{}
+\begin{figure}
+  \begin{subfigure}[t]{.5\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{pic/loesungen/12a_steps.png}
+    \caption{Generierung von Stufen}
+    \label{fig:s_12steps}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{.5\textwidth}
+    \centering
+    \includegraphics[width=.9\linewidth]{pic/loesungen/12b_bumps.png}
+    \caption{}
+    \label{fig:s_12bumps}
+  \end{subfigure}
+  \caption{typische Diskretisierungseffekte in Occupancy Voxel Maps \cite{3DsurfelGridMaps}}
+  \label{fig:discretization_effects}
+\end{figure}
+\mbox{}
 
 
-\subsection{Dreidimensionale Indoor Lokalisierung}\label{subsec:}
+\newpage
+\subsection{Dreidimensionale Indoor Lokalisierung}\label{subsec:3d_indoor}
 \addtocontents{toc}{\vspace{0.8cm}}
 % TODO Unterkapitel 3D Indoor Lokalisierung schreiben
