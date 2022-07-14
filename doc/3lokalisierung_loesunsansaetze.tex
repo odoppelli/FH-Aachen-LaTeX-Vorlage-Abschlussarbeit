@@ -38,7 +38,6 @@ Das Position Tracking benötigt für eine genügend genaue Standortbestimmung we
 
 \subsection{Monte Carlo Lokalisierung mit Surfel Grid Maps}\label{subsec:mcl_surfel}
 \addtocontents{toc}{\vspace{0.8cm}}
-% TODO Unterkapitel MCL mit Surfel Grid Maps schreiben
 \begin{wrapfigure}{R}{0.3\textwidth}
     \centering
     \includegraphics[width=0.28\textwidth]{pic/loesungen/12_surfel.png}
@@ -70,7 +69,8 @@ Das System wurde vor allem in Hinblick auf die Navigation von bodengebundenen mo
 \mbox{}
 
 
-\newpage
 \subsection{Dreidimensionale Indoor Lokalisierung}\label{subsec:3d_indoor}
 \addtocontents{toc}{\vspace{0.8cm}}
-% TODO Unterkapitel 3D Indoor Lokalisierung schreiben
+Perez-Grau et al. \cite{dreidimensionale_indoor_lokalisierung} haben 2017 ein System zur dreidimensionalen Positionsbestimmung eines UAV in einem geschlossenen Raum vorgestellt. Der Ansporn zu dessen Entwurf liegt in der industriellen Nutzung von UAVs, wie beispielsweise dem Transportieren von Gegenständen.\\
+Die Umgebung wird in Voxeln modelliert und es werden mehrere Sensoren benutzt um mithilfe des MCL Algorithmus eine 3D Position errechnen zu können (siehe Bild \ref{fig:3d_indoor_system}). Eine RGB-D Kamera wird genutzt um sowohl RGB-Bilder, als auch Point Clouds erfassen zu können. Außerdem werden drei sogenannte \textit{ultra-wideband Beacons} (UWB Beacons) genutzt, um per Triangulation einen Standort des UAVs im Raum errechnen zu können. Die Odometry ist hierbei nicht nur von einer IMU abhängig, sondern nutzt ebenfalls die Bilder der Kamera, als auch dessen Point Clouds. So soll eine möglichst genau \textit{Prediction} (Vorhersage) im Robot Motion Schritt des MCL generiert werden, die dann durch ein Update (Sensor readings) berichtigt wird. Diese Berichtigung ist abhängig von den 3D Point Clouds der Kamera, der 3D Voxel Map und den Distanzen zu den drei, im Raum verteilten, UWB Beacons. Die daraus errechnete 3D Position beinhaltet nicht die Nick- und Rollwinkel. Diese werden direkt aus den Berechnungen der IMU entnommen.\\
+Der Raum in dem das System getestet wurde ist mit Kameras ausgestattet worden, um den wahren Standort des UAVs, unabhängig vom entworfenen System, erhalten zu können. So konnte ein mehr als 500 Sekunden langer Testflug unternommen werden, bei dem der Fehler der Odometry und der Fehler des MCL genau bestimmt werden konnten (siehe Bild ).
