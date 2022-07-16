@@ -38,9 +38,9 @@ Das Position Tracking benötigt für eine genügend genaue Standortbestimmung we
 
 \subsection{Monte Carlo Lokalisierung mit Surfel Grid Maps}\label{subsec:mcl_surfel}
 \addtocontents{toc}{\vspace{0.8cm}}
-\begin{wrapfigure}{R}{0.3\textwidth}
+\begin{wrapfigure}{R}{0.2\textwidth}
     \centering
-    \includegraphics[width=0.28\textwidth]{pic/loesungen/12_surfel.png}
+    \includegraphics[width=0.18\textwidth]{pic/loesungen/12_surfel.png}
     \caption{Surface Element in a Voxel}
     \label{fig:surfel}
 \end{wrapfigure}
@@ -50,7 +50,7 @@ Die dahinter liegenden Berechnungen basieren auf MCL. Der Schritt Robot Motion b
 Das System wurde vor allem in Hinblick auf die Navigation von bodengebundenen mobilen Robotern entwickelt. Das neuartige Surface Element soll dazu dienen die problematischen Diskretisierungseffekete von herkömmlichen 3D Voxel Grid Maps zu verringern (siehe Bild). Außerdem soll die Lokalisierung in dynamischen Szenarien erleichtert werden, indem der Algorithmus sich die 3D Map vollständig zu Nutze macht und sich dann auf Messungen über der Höhe des Menschen konzentriert um eine erfolgreiche Ortung durchzuführen.
 % TODO Ergebnisse der Experimente einbringen
 \mbox{}
-\begin{figure}
+\begin{figure}[ht]
   \begin{subfigure}[t]{.5\textwidth}
     \centering
     \includegraphics[width=.9\linewidth]{pic/loesungen/12a_steps.png}
@@ -68,9 +68,35 @@ Das System wurde vor allem in Hinblick auf die Navigation von bodengebundenen mo
 \end{figure}
 \mbox{}
 
-
+\newpage
 \subsection{Dreidimensionale Indoor Lokalisierung}\label{subsec:3d_indoor}
 \addtocontents{toc}{\vspace{0.8cm}}
+\begin{wrapfigure}{R}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.48\textwidth]{pic/loesungen/13_system.png}
+    \caption{Systemaufbau}
+    \label{fig:13_system}
+\end{wrapfigure}
 Perez-Grau et al. \cite{dreidimensionale_indoor_lokalisierung} haben 2017 ein System zur dreidimensionalen Positionsbestimmung eines UAV in einem geschlossenen Raum vorgestellt. Der Ansporn zu dessen Entwurf liegt in der industriellen Nutzung von UAVs, wie beispielsweise dem Transportieren von Gegenständen.\\
-Die Umgebung wird in Voxeln modelliert und es werden mehrere Sensoren benutzt um mithilfe des MCL Algorithmus eine 3D Position errechnen zu können (siehe Bild \ref{fig:3d_indoor_system}). Eine RGB-D Kamera wird genutzt um sowohl RGB-Bilder, als auch Point Clouds erfassen zu können. Außerdem werden drei sogenannte \textit{ultra-wideband Beacons} (UWB Beacons) genutzt, um per Triangulation einen Standort des UAVs im Raum errechnen zu können. Die Odometry ist hierbei nicht nur von einer IMU abhängig, sondern nutzt ebenfalls die Bilder der Kamera, als auch dessen Point Clouds. So soll eine möglichst genau \textit{Prediction} (Vorhersage) im Robot Motion Schritt des MCL generiert werden, die dann durch ein Update (Sensor readings) berichtigt wird. Diese Berichtigung ist abhängig von den 3D Point Clouds der Kamera, der 3D Voxel Map und den Distanzen zu den drei, im Raum verteilten, UWB Beacons. Die daraus errechnete 3D Position beinhaltet nicht die Nick- und Rollwinkel. Diese werden direkt aus den Berechnungen der IMU entnommen.\\
-Der Raum in dem das System getestet wurde ist mit Kameras ausgestattet worden, um den wahren Standort des UAVs, unabhängig vom entworfenen System, erhalten zu können. So konnte ein mehr als 500 Sekunden langer Testflug unternommen werden, bei dem der Fehler der Odometry und der Fehler des MCL genau bestimmt werden konnten (siehe Bild ).
+Die Umgebung wird in Voxeln modelliert und es werden mehrere Sensoren benutzt um mithilfe des MCL Algorithmus eine 3D Position errechnen zu können (siehe Bild \ref{fig:13_system}). Eine RGB-D Kamera wird genutzt um sowohl RGB-Bilder, als auch Point Clouds erfassen zu können. Außerdem werden drei sogenannte \textit{ultra-wideband Beacons} (UWB Beacons) genutzt, um per Triangulation einen Standort des UAVs im Raum errechnen zu können. Die Odometry ist hierbei nicht nur von einer IMU abhängig, sondern nutzt ebenfalls die Bilder der Kamera, als auch dessen Point Clouds. So soll eine möglichst genau \textit{Prediction} (Vorhersage) im Robot Motion Schritt des MCL generiert werden, die dann durch ein Update (Sensor readings) berichtigt wird. Diese Berichtigung ist abhängig von den 3D Point Clouds der Kamera, der 3D Voxel Map und den Distanzen zu den drei, im Raum verteilten, UWB Beacons. Die daraus errechnete 3D Position beinhaltet nicht die Nick- und Rollwinkel. Diese werden direkt aus den Berechnungen der IMU entnommen.\\
+Der Raum in dem das System getestet wurde ist mit Kameras ausgestattet worden, um den wahren Standort des UAVs, unabhängig vom entworfenen System, erhalten zu können. So konnte ein mehr als 500 Sekunden langer Testflug unternommen werden, bei dem der Fehler der Odometry und der Fehler des MCL genau bestimmt werden konnten (siehe Bild \ref{fig:13_testergebnisse}).
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\textwidth]{pic/loesungen/13_testergebnisse.png}
+    \caption{Testergebnisse der Autoren: links ist die Abweichung der Odometry, rechts die Abweichung nach Durchlauf des MCL angegeben \cite{dreidimensionale_indoor_lokalisierung}}
+    \label{fig:13_testergebnisse}
+\end{figure}
+
+
+\section{Leader-Based Bat Algorithm}\label{sec:lbba}
+\addtocontents{toc}{\vspace{0.8cm}}
+Ähnlich wie die MCL, basiert der \textit{Leader-Based Bat Algorithm}(LBBA) ebenfalls auf Partikeln. Diese stellen in dem von Neto et al.\cite{LBBA} vorgeschlagenen Modell Fledermäuse dar, die ihre Inspiration in den \textit{Microbats} der realen Welt finden. Diese Fledermäuse fressen Insekten, und müssen ihre Umwelt und ihre Beute dazu präzise wahrnehmen können. Dazu fliegen sie an einem Ort \textit{x} mit einer Geschwindigkeit \textit{v} und nutzen die sogenannte Echolokation zur Wahrnehmung ihrer Umgebung. Dazu geben sie Ultraschallwellen von sich, nehmen die reflektierenden Wellen durch ihre Ohren wahr und bilden sich so ein Bild von ihrer Umwelt.\\
+Yang et al.\cite{BA} implementierten und imitierten dieses Verhalten in dem \textit{Bat-Algorithm} (BA), dessen Aufgabenbereich in der globalen Optimierung liegt. Neto et al.\cite{LBBA} ergänzten diesen Algorithmus, mit dem Ziel ihn auf das Lokalisierungsproblem von mobilen Robotern anzupassen und darauf hin zu optimieren. Im Algorithmus werden $N$ viele Fledermäuse initialisiert, die eine zufällig zugeteilte Position $x$ und Geschwindigkeit $v$ haben. Außerdem wird die minimale- und maximale Frequenz,$F_{min}$ und $F_{max}$  (typischerweise [0,1]), die Lautstärke $A$ und die \textit{pulse emission rate} initialisiert. Der Ablauf des Algorithmus ist in Bild \ref{fig:lbba_code} dargestellt. Das Gewicht der Fledermäuse, bzw ihre \textit{fitness-function},, wird durch die Abweichung der am Ort der Fledermaus simulierten Sensor-Messung und der wahren Messung errechnet. Dies kann beispielsweise mithilfe des Observation-Models oder der Formel $f(x_i) = \frac{m_i -m}{m}$ erfolgen, wobei $m_i$ die simulierte Messung und m die wahre Messung darstellt.\\
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{pic/loesungen/20_lbba_algorithm.png}
+    \caption{Der LBBA Code\cite{LBBA}. Die Variablen $\xi_{1-3}$ stellen zufällige Größen dar.}
+    \label{fig:lbba_code}
+\end{figure}
+Der LBBA unterscheidet sich vom herkömmlichen BA in der Anzahl der besten Fledermäuse. Im BA wird bei jede Iteration genau eine Fledermaus zur besten Fledermaus in Hinsicht auf ihre fitness-Function gekürt. Dieser Alle anderen Fledermäuse bewegen sich in den darauf folgenden Iterationen auf diese Fledermaus zu, wobei eine Möglichkeit besteht, dass sie eine bessere fitness-Function als die ehemals beste Fledermaus haben, womit sie wiederum zur besten Fledermaus gekürt werden. Die Schleife wird so lange durchlaufen, bis ein Endkriterium erfüll wird. Im LBBA gibt es eine global beste Fledermaus, und eine benutzerdefinierte Anzahl an besten Fledermäusen. Alle Fledermäuse in einer bestimmten Nähe zur nächsten besten Fledermaus richten sich nach dieser aus und folgen dieser. Dies führt dazu, dass mehr Möglichkeiten der Lösung berücksichtigt werden, als im ursprünglichen BA.\\
+Der LBBA ist im Kern ein offline-Algorithmus. Ihm genügt bereits eine Messung der externen Sensoren, um einen Standort errechnen zu können, was in der Aufgabe der globalen Lokalisierung von starkem Nutzen ist. Er kann allerdings auch online - also beispielsweise zum Position Tracking - eingesetzt werden. Die Autoren haben den LBBA unter anderem mit der AMCL und dem BA verglichen. Dabei haben sie experimentell festgestellt, dass LBBA mit nur wenigen Iterationen der \textit{while-Schleife} die präzisesten Ergebnisse liefert. Allerdings wird darauf hingedeutet, dass AMCL um ein vielfaches schneller ist sobald die globale Position einmal gefunden wurde.
