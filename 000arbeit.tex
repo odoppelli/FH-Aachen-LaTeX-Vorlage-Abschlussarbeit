@@ -113,7 +113,7 @@
 %\renewcommand{\nomlabel}[1]{#1 \dotfill}
 %\setlength{\nomitemsep}{-\parsep}
 %\makenomenclature
-
+\usepackage{etoolbox}
 \usepackage[]{acronym}
 
 \begin{document}
@@ -132,6 +132,7 @@
     \clearpage
     \makeatletter
     \renewcommand*{\@dotsep}{1} % Punktabstand einstellen
+    \patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
     \makeatother
         {
             \hypersetup{linkcolor=black}
