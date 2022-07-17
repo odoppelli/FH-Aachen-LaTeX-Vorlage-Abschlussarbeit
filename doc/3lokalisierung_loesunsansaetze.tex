@@ -37,16 +37,16 @@ Das Position Tracking benötigt für eine genügend genaue Standortbestimmung we
 
 \subsection{Monte Carlo Lokalisierung mit Surfel Grid Maps}\label{subsec:mcl_surfel}
 \addtocontents{toc}{\vspace{0.8cm}}
-\begin{wrapfigure}{R}{0.2\textwidth}
+\begin{wrapfigure}{R}{0.3\textwidth}
     \centering
-    \includegraphics[width=0.18\textwidth]{pic/loesungen/12_surfel.png}
-    \caption{Surface Element in a Voxel}
+    \includegraphics[width=0.28\textwidth]{pic/loesungen/12_surfel.png}
+    \caption{Surface Element in einem Voxel}
     \label{fig:surfel}
 \end{wrapfigure}
 Kläß et al. \cite{3DsurfelGridMaps} haben 2012 einen Algorithmus vorgestellt, dessen Ziel eine 2D Positionsbestimmung anhand einer 3D Voxel Grid Map ist. Die Lokalisierung wurde in der Veröffentlichung indoor durchgeführt und soll auch in dynamischen Szenarien, wenn sich beispielsweise bewegende Menschen in der Umgebung befinden, genau funktionieren können.\\
-Die Besonderheit dieser Herangehensweise liegt in der Repräsentation der Umgebung. Die Umgebung wird durch eine vielzahl an Voxel (Würfel) modelliert, in denen sich jeweils ein \textit{Surface Element} oder kurz Surfel befindet (siehe bild). Befindet sich bei der Modellierung der Umgebung ein Objekt in einem Voxel, so wird ein Surfel entsprechend der Oberfläche des Objektes im Voxel generiert.\\
+Die Besonderheit dieser Herangehensweise liegt in der Repräsentation der Umgebung. Die Umgebung wird durch eine vielzahl an Voxel (Würfel) modelliert, in denen sich jeweils ein \textit{Surface Element} oder kurz Surfel befindet (siehe Bild \ref{fig:surfel}). Befindet sich bei der Modellierung der Umgebung ein Objekt in einem Voxel, so wird ein Surfel entsprechend der Oberfläche des Objektes im Voxel generiert.\\
 Die dahinter liegenden Berechnungen basieren auf MCL. Der Schritt Robot Motion bleibt bestehen, der der Sensor readings wird allerdings den neuen Techniken abgewandelt. Die Autoren schlagen für die verwendeten Sensor Models je nach Bedarf das \textit{Plane-to-Plane Model} oder das \textit{Line-to-Plane Model} vor. Ersteres stellt ein Oberservation-Model speziell für Sensorik, die 3D Scans in der 3D Surfel Grid Map durchführen soll, wie etwa LiDAR vor. Das Line-to-Plane Model hingegen zeigt eine mögliche Implementierung für Sensorik, die 2D Scans in der 3D Surfel Grid Map leisten soll. Aufgrund der fehlenden Dimension kann in letzterem Modell die Orientierung der Normale des Surfels nicht berücksichtigt werden.\\
-Das System wurde vor allem in Hinblick auf die Navigation von bodengebundenen mobilen Robotern entwickelt. Das neuartige Surface Element soll dazu dienen die problematischen Diskretisierungseffekete von herkömmlichen 3D Voxel Grid Maps zu verringern (siehe Bild). Außerdem soll die Lokalisierung in dynamischen Szenarien erleichtert werden, indem der Algorithmus sich die 3D Map vollständig zu Nutze macht und sich dann auf Messungen über der Höhe des Menschen konzentriert um eine erfolgreiche Ortung durchzuführen.
+Das System wurde vor allem in Hinblick auf die Navigation von bodengebundenen mobilen Robotern entwickelt. Das neuartige Surface Element soll dazu dienen die problematischen Diskretisierungseffekete von herkömmlichen 3D Voxel Grid Maps zu verringern (siehe Bild \ref{fig:discretization_effects}). Außerdem soll die Lokalisierung in dynamischen Szenarien erleichtert werden, indem der Algorithmus sich die 3D Map vollständig zu Nutze macht und sich dann auf Messungen über der Höhe des Menschen konzentriert um eine erfolgreiche Ortung durchzuführen.
 % TODO Ergebnisse der Experimente einbringen
 \mbox{}
 \begin{figure}[ht]
@@ -99,3 +99,17 @@ Yang et al.\cite{BA} implementierten und imitierten dieses Verhalten in dem \tex
 \end{figure}
 Der LBBA unterscheidet sich vom herkömmlichen BA in der Anzahl der besten Fledermäuse. Im BA wird bei jede Iteration genau eine Fledermaus zur besten Fledermaus in Hinsicht auf ihre fitness-Function gekürt. Dieser Alle anderen Fledermäuse bewegen sich in den darauf folgenden Iterationen auf diese Fledermaus zu, wobei eine Möglichkeit besteht, dass sie eine bessere fitness-Function als die ehemals beste Fledermaus haben, womit sie wiederum zur besten Fledermaus gekürt werden. Die Schleife wird so lange durchlaufen, bis ein Endkriterium erfüll wird. Im LBBA gibt es eine global beste Fledermaus, und eine benutzerdefinierte Anzahl an besten Fledermäusen. Alle Fledermäuse in einer bestimmten Nähe zur nächsten besten Fledermaus richten sich nach dieser aus und folgen dieser. Dies führt dazu, dass mehr Möglichkeiten der Lösung berücksichtigt werden, als im ursprünglichen BA.\\
 Der LBBA ist im Kern ein offline-Algorithmus. Ihm genügt bereits eine Messung der externen Sensoren, um einen Standort errechnen zu können, was in der Aufgabe der globalen Lokalisierung von starkem Nutzen ist. Er kann allerdings auch online - also beispielsweise zum Position Tracking - eingesetzt werden. Die Autoren haben den LBBA unter anderem mit der AMCL und dem BA verglichen. Dabei haben sie experimentell festgestellt, dass LBBA mit nur wenigen Iterationen der \textit{while-Schleife} die präzisesten Ergebnisse liefert. Allerdings wird darauf hingedeutet, dass AMCL um ein vielfaches schneller ist sobald die globale Position einmal gefunden wurde.
+
+
+\section{Präzise Vehikel Lokalisierung im Urbanen Bereich}\label{sec:vehicle_urban}
+\addtocontents{toc}{\vspace{0.8cm}}
+Chong et al. \cite{vehicleLocalizationUrban} haben ein Lokalisierungssystem entwickelt, welches eine 2D Position eines Vehikels, im speziellen eines Golf-Carts, in einer urbanen Umgebung ermittelt. Das System verfolgt das Ziel einer präzisen Lokalisierung mit nur einem angewinkelten LIDAR und der Odometry. Es vermeidet damit die Nutzung des GPS (Global Positioning System), welches im urbanen Bereich nur bedingt zuverlässig funktioniert, da höhere Gebäude zur Blockung von Satelliten oder ähnlichen Fehlern führen können. Außerdem nutzt es eine vorher erschaffene Karte und kleinere LIDAR Sensoren zur Hinderniss-Erkennung.\\
+Das System, dargestellt in Bild \ref{fig:30_system}, nutzt die, durch den nach unten angewinkelten 3D LIDAR Sensor, aufgenommen Point Clouds, um vertikale Objekte zu erkennen. Dazu wird eine 3D Ebene an die Point Clouds per \textit{Least-Squares Fitting} angepasst. Dann wird die Normale der Ebene genutzt, um dazu passende Vertikale Objekte, mithilfe optimierter Klassifikation der Punkte, zu finden. Die gefundenen Features werden dann auf einen synthetischen 2D LIDAR Sensor horizontal projiziert, indem die z-Kooridnate auf Null gesetzt wird. Der virtuelle Sensor wird dann auf die Base des Fahrzeugs gesetzt, um zusammen mit der Odometry, den extrahierten vertikalen Features und der vorher erstellten Karte in einem AMCL Algorithmus die Ermittlung der Position des Golf-Carts zu ermöglichen.
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{pic/loesungen/30_System.png}
+    \caption{Das vorgeschlagene System \cite{vehicleLocalizationUrban}}
+    \label{fig:30_system}
+\end{figure}
+Durch die Projizierung der 3D LIDAR Daten auf einen virtuellen 2D LIDAR Sensor, ist es dem virtuellen Sensor möglich "durch Objekte hindurch schauen zu können". Das führt, geschickt implementiert, zur Detektierung von mehr Features, als es mit einem 2D LIDAR Scanner möglich gewesen wäre.\\
+Dem Algorithmus wurde eine ungefähre Start-Position gegeben, und im Falle eines größeren Kidnapping-Szenarios wurde ihm ebenfalls eine ungefähre Position mitgeteilt. So hatte der AMCL Algorithmus fast nur die Aufgabe des Position Tracking. Die Autoren geben an, dass bei einer längeren Fahrt in der \textit{NUS engineering area} (also auf dem Campus der National University of Singapur) die maximale Varianz bei 0.2 Metern lag.

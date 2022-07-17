@@ -132,7 +132,6 @@
     \clearpage
     \makeatletter
     \renewcommand*{\@dotsep}{1} % Punktabstand einstellen
-    \patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
     \makeatother
         {
             \hypersetup{linkcolor=black}
@@ -148,9 +147,11 @@
     % Nicht benötigte Kapitel können auskommentiert werden
     % Für zusätzliche Kapitel müssen weitere Dateien im Ordner 'doc' angelegt werden
     
-    \include{doc/1einleitung} % einleitung
-    \include{doc/2vorwissen} % vorwissen
-    \include{doc/3lokalisierung_loesunsansaetze} % Lokalisierung - Lösungsansätze
+    \input{doc/1einleitung} % einleitung
+    \input{doc/2vorwissen} % vorwissen
+    \input{doc/3lokalisierung_loesunsansaetze}
+    \input{doc/4fazit}
+    % Lokalisierung - Lösungsansätze
     
     % beispiele von der Vorlage
     %\include{./doc/101kap1} % Einleitung
